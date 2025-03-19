@@ -1,17 +1,13 @@
 <?php
 session_start();
 
-// checl user log in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header('Location: login.php');
     exit;
 }
 
-// check form submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validate the input
     if (empty($_POST['task_name'])) {
-        // Redirect back with error
         header('Location: index.php?error=Task name cannot be empty');
         exit;
     }
@@ -35,20 +31,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':created_at' => $currentTime
         ];
         
-        // Execute 
         $stmt = $conn->prepare($sql);
         $stmt->execute($params);
-        
-        // Redirect back to index page
+
         header('Location: index.php?success=Task added successfully');
         exit;
     } catch (PDOException $e) {
-        // Redirect with error message
+
         header('Location: index.php?error=' . urlencode("Database error: " . $e->getMessage()));
         exit;
     }
 } else {
-    // not a POST request, redirect to index
     header('Location: index.php');
     exit;
 }
