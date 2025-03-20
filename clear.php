@@ -10,7 +10,8 @@ require_once 'db.php';
 
 try {
 
-    $stmt = $conn->prepare("DELETE FROM tasks WHERE is_completed = 1");
+    $stmt = $conn->prepare("DELETE FROM tasks WHERE is_completed = 1 AND user_id = :user_id");
+    $stmt->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
     $stmt->execute();
 
     $rowsAffected = $stmt->rowCount();
