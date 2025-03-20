@@ -16,8 +16,9 @@ require_once 'db.php';
 try {
     $taskId = $_GET['id'];
 
-    $stmt = $conn->prepare("UPDATE tasks SET is_completed = 1 WHERE id = :id");
-    $stmt->bindParam(':id', $taskId);
+    $stmt = $conn->prepare("UPDATE tasks SET is_completed = 1 WHERE id = :id AND user_id = :user_id");
+    $stmt->bindParam(':id', $taskId, PDO::PARAM_INT);
+    $stmt->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
     $stmt->execute();
 
     header('Location: index.php?success=Task completed');
