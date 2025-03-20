@@ -7,7 +7,9 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     if (empty($_POST['task_name'])) {
+
         header('Location: index.php?error=Task name cannot be empty');
         exit;
     }
@@ -25,14 +27,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $currentTime = date('Y-m-d H:i:s');
         
         
-        $sql = "INSERT INTO tasks (task_name, is_completed, created_at) VALUES (:task_name, 0, :created_at)";
+        $sql = "INSERT INTO tasks (task_name, is_completed, created_at, user_id) VALUES (:task_name, 0, :created_at, :user_id)";
         $params = [
             ':task_name' => $taskName,
-            ':created_at' => $currentTime
+            ':created_at' => $currentTime,
+            ':user_id' => $_SESSION['user_id']
         ];
         
+
         $stmt = $conn->prepare($sql);
         $stmt->execute($params);
+        
 
         header('Location: index.php?success=Task added successfully');
         exit;
@@ -42,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 } else {
+
     header('Location: index.php');
     exit;
 }
