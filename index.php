@@ -21,15 +21,18 @@ try {
     $stmt->execute();
     $columns = $stmt->fetchAll(PDO::FETCH_COLUMN);
     
-    $stmt = $conn->prepare("SELECT * FROM tasks WHERE is_completed = 0 ORDER BY created_at DESC");
+    $stmt = $conn->prepare("SELECT * FROM tasks WHERE is_completed = 0 AND user_id = :user_id ORDER BY created_at DESC");
+    $stmt->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
     $stmt->execute();
     $incompleteTasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $stmt = $conn->prepare("SELECT COUNT(*) FROM tasks WHERE is_completed = 1");
+    $stmt = $conn->prepare("SELECT COUNT(*) FROM tasks WHERE is_completed = 1 AND user_id = :user_id");
+    $stmt->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
     $stmt->execute();
     $totalCompletedTasks = $stmt->fetchColumn();
 
-    $stmt = $conn->prepare("SELECT * FROM tasks WHERE is_completed = 1 ORDER BY created_at DESC LIMIT :limit OFFSET :offset");
+    $stmt = $conn->prepare("SELECT * FROM tasks WHERE is_completed = 1 AND user_id = :user_id ORDER BY created_at DESC LIMIT :limit OFFSET :offset");
+    $stmt->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
     $stmt->bindParam(':limit', $tasksPerPage, PDO::PARAM_INT);
     $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
     $stmt->execute();
