@@ -1,0 +1,152 @@
+/* General Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Body Styling */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #3E5879; /* Light gray background */
+}
+
+/* Title Styling */
+.title {
+    color: #ffffff; /* Dark gray */
+    margin-bottom: 40px;
+    font-size: 50px; /* Slightly larger title */
+    letter-spacing: 1px;
+}
+
+/* Keyboard Wrapper */
+.keyboard-wrapper {
+    width: 1000px; /* Increased width for the keyboard */
+    background-color: #F5EFE7; /* White background for the keyboard */
+    padding: 20px; /* Increased padding */
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+/* Keyboard Container */
+.keyboard-container {
+    display: flex;
+    justify-content: center;
+    gap: 8px; /* Increased gap between keys */
+    margin-bottom: 8px; /* Increased margin between rows */
+    width: 100%;
+}
+
+/* Individual Keys */
+.keyboard {
+    position: relative;
+    background-color: #e0e0e0; /* Light gray for keys */
+    border: 1px solid #b0b0b0; /* Medium gray border */
+    border-radius: 5px;
+    padding: 12px; /* Increased padding for larger keys */
+    min-width: 60px; /* Increased minimum width */
+    height: 60px; /* Increased height */
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px; /* Slightly larger font size */
+    color: #4a4a4a; /* Dark gray text */
+    flex: 1;
+    z-index: 1;
+}
+
+/* Key Glow Effect */
+.keyboard::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    background-size: 400% 400%;
+    z-index: -1;
+    border-radius: 6px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    filter: blur(3px);
+}
+
+/* Key Press Effect */
+.keyboard:active {
+    background-color: #d6d6d6; /* Slightly darker gray when pressed */
+    transform: scale(0.95);
+}
+
+.keyboard:active::before {
+    opacity: 1;
+    animation: rgb-glow 2s linear infinite;
+}
+
+/* RGB Glow Animation */
+@keyframes rgb-glow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Special Keys */
+.keyboard.special {
+    flex: 1.5;
+    background-color: #ffcccc; /* Slightly darker gray for special keys */
+    color: #4a4a4a; /* Dark gray text */
+}
+
+.keyboard.red {
+    background-color: #ffcccc; /* Light red for the "Esc" key */
+    color: #4a4a4a; /* Dark gray text */
+}
+
+/* Spacebar */
+.spacebar {
+    flex: 7;
+    background-color: #e0e0e0; /* Light gray */
+    height: 60px; /* Match the height of other keys */
+}
+
+/* Adjust Key Sizes for Specific Rows */
+.keyboard-container:nth-child(1) .keyboard:first-child,
+.keyboard-container:nth-child(1) .keyboard:last-child {
+    flex: 1.5;
+}
+
+.keyboard-container:nth-child(2) .keyboard:first-child,
+.keyboard-container:nth-child(2) .keyboard:last-child {
+    flex: 1.5;
+}
+
+.keyboard-container:nth-child(3) .keyboard:first-child,
+.keyboard-container:nth-child(3) .keyboard:last-child {
+    flex: 1.8;
+}
+
+.keyboard-container:nth-child(4) .keyboard:first-child,
+.keyboard-container:nth-child(4) .keyboard:last-child {
+    flex: 2.2;
+}
+
+/* Hover Effect */
+.keyboard:hover {
+    background-color: #d6d6d6; /* Slightly darker gray on hover */
+    border-color: #a0a0a0; /* Darker border on hover */
+}
